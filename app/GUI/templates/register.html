@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+</head>
+<body class="bg-blue-200 flex flex-col items-center justify-center min-h-screen p-4">
+    <h1 class="text-3xl font-bold mb-6">Добро пожаловать в чат</h1>
+
+    <form class="bg-white p-6 rounded-xl shadow-md w-full max-w-md">
+        <label class="block text-gray-700">Введите почту</label>
+            <input type="email" name="email" required
+                   class="w-full p-2 border border-gray-300 rounded-lg mt-2 focus:ring-2 focus:ring-blue-500">
+        <label class="block text-gray-700">Введите никнейм</label>
+            <input type="text" name="nickname" required
+                   class="w-full p-2 border border-gray-300 rounded-lg mt-2 focus:ring-2 focus:ring-blue-500">
+        <label class="block text-gray-700">Введите имя:</label>
+            <input type="text" name="first_name" required
+                   class="w-full p-2 border border-gray-300 rounded-lg mt-2 focus:ring-2 focus:ring-blue-500">
+        <label class="block text-gray-700">Введите фамилию</label>
+            <input type="text" name="last_name" required
+                   class="w-full p-2 border border-gray-300 rounded-lg mt-2 focus:ring-2 focus:ring-blue-500">
+        <label class="block text-gray-700">Введите телефон</label>
+            <input type="text" name="phone" required
+                   class="w-full p-2 border border-gray-300 rounded-lg mt-2 focus:ring-2 focus:ring-blue-500">
+        <label class="block text-gray-700">Введите пароль</label>
+            <input type="password" name="password" required
+                   class="w-full p-2 border border-gray-300 rounded-lg mt-2 focus:ring-2 focus:ring-blue-500">
+        <label class="block text-gray-700">Подтвердите пароль</label>
+            <input type="password" name="confirm_password" required
+                   class="w-full p-2 border border-gray-300 rounded-lg mt-2 focus:ring-2 focus:ring-blue-500">
+        <div id="showError" class="hidden text-red-500 mt-2 flex items-center justify-center"></div>
+        <button type="submit" class="w-full bg-blue-500 text-white px-4 py-2 rounded-lg mt-4 hover:bg-blue-600">Войти в чат</button>
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+    </form>
+
+    <div class="mt-5">
+        <button id="getLoggedIn" class="w-full bg-blue-400 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Уже есть аккаунт? Войти!</button>
+    </div>
+    <script type="module" src="GUI/static/register.js"></script>
+</body>
+</html>

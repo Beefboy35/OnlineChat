@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LogIn</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body class="bg-blue-200 flex flex-col items-center justify-center min-h-screen p-4">
+<h1 class="text-3xl font-bold mb-6">Войдите в систему</h1>
+    <form class="bg-white p-6 rounded-xl shadow-md w-full max-w-md">
+        <label class="block text-gray-700">Введите почту</label>
+        <input type="email" name="email" placeholder="example@yandex.com"
+               class="w-full p-2 border border-gray-300 rounded-lg mt-2 focus:ring-2 focus:ring-blue-500">
+        <label class="block text-gray-700">Введите пароль</label>
+        <input type="password" name="password"
+               class="w-full p-2 border border-gray-300 rounded-lg mt-2 focus:ring-2 focus:ring-blue-500">
+        <div id="showError" class="hidden text-red-500 mt-2 flex items-center justify-center"></div>
+        <button type="submit" class="w-full bg-blue-500 text-white px-4 py-2 rounded-lg mt-4 hover:bg-blue-600">Войти в чат</button>
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+    </form>
+    <div class="mt-5">
+        <button id="getSignedUp" class="w-full bg-blue-400 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Все еще нет аккаунта? Зарегистрируйтесь!</button>
+   </div>
+<script type="module" src="GUI/static/login.js"></script>
+</body>
+</html>
