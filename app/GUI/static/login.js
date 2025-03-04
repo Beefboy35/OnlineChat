@@ -31,4 +31,5 @@ document.querySelector('form').addEventListener('submit', async (event) => {
         setTimeout(() => {
             errorBlock.classList.add('hidden');
         }, 2000);
+      }
 });

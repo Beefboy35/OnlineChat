@@ -3,6 +3,7 @@
 <head>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="GUI/static/main_page.css">
     <meta charset="UTF-8">
     <title>Main page</title>
 </head>
@@ -27,6 +28,16 @@
 </div>
 
 <!-- Поле ввода и кнопка -->
+<div class="hidden fixed inset-0 bg-black opacity-50" id="darkenBg"></div>
+<div class="hidden fixed inset-0 flex items-center justify-center" id="profileForm">
+    <div class="bg-white p-6 rounded-lg shadow-xl flex flex-col items-center">
+            <h2 class="text-2xl font-bold pb-4">User Information</h2>
+            <p class="pb-4 text-xl">Nickname: {{ nickname }}</p>
+            <p class="pb-4 text-xl">Full name: {{ first_name }} {{ last_name }}</p>
+            <p class="pb-4 text-xl">Phone number: {{ phone }}</p>
+        <button class="mt-4 bg-blue-600 text-white px-4 py-2 rounded focus:bg-blue-700 transition duration-200" id="closeForm">Close</button>
+    </div>
+</div>
 <div class="flex mt-4 w-full max-w-lg">
     <h3 class="flex items-center p-2 border border-gray-300 ring-1 rounded-lg" id="getProfile">{{nickname}}</h3>
     <input id="messageInput"

@@ -1,6 +1,7 @@
 import re
 
 from email_validator import validate_email, EmailUndeliverableError
+from fastapi import Depends
 from passlib.context import CryptContext
 from authlib.jose import jwt
 
@@ -8,7 +9,10 @@ from fastapi.responses import Response
 
 from app.config import settings
 
-from app.auth.exceptions import InvalidEmailException, InvalidPasswordException, InvalidPhoneNumberException
+from app.auth.exceptions import InvalidEmailException, InvalidPasswordException, InvalidPhoneNumberException, \
+    NamesStartWithCapLetter
+from app.dao.models import User
+from app.dependencies.auth_dep import check_refresh_token
 
 
 def create_tokens(data: dict) -> dict:
@@ -38,7 +42,9 @@ def is_the_same_password(password: str, conf_password: str):
     return password == conf_password
 
 
-def validate_credentials(password: str, email: str, phone_number: str):
+def validate_credentials(first_name: str, last_name: str, password: str, email: str, phone_number: str):
+    if first_name != first_name.capitalize() or last_name != last_name.capitalize():
+        raise NamesStartWithCapLetter
     if not validate_password(password):
         raise InvalidPasswordException
     if not validate_phone_number(phone_number):
@@ -73,7 +79,6 @@ def set_tokens(response: Response, user_id: int):
         samesite="lax"
     )
     return response
-
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 

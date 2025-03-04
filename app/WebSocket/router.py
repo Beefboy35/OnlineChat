@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from loguru import logger
 from starlette.websockets import WebSocket, WebSocketDisconnect
-
+import websockets
 from app.WebSocket.manager import manager
 
 router = APIRouter()

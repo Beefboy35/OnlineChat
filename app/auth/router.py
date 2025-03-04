@@ -32,7 +32,8 @@ async def register_user(response: Response,
                 raise CSRFTokenError
             if not is_the_same_password(user_data.password, user_data.confirm_password):
                 raise PasswordsDoNotMatchException
-            validate_credentials(user_data.password, user_data.email, user_data.phone_number)
+            validate_credentials(user_data.first_name, user_data.last_name,
+                                 user_data.password, user_data.email, user_data.phone_number)
             user_dao = UsersDAO(session)
             existing_user = await user_dao.find_one_or_none(filters=VerifyModel(
                 email=user_data.email,
@@ -45,9 +46,8 @@ async def register_user(response: Response,
             user_data_dict = user_data.model_dump()
             user_data_dict.pop('confirm_password', None)
             added_user = await user_dao.add(values=SUserAddDB(**user_data_dict))
-            set_tokens(response, added_user.id)
             # возращаем сообщение об успехе и устанавливаем JWT токены
-            return JSONResponse(status_code=200, content={'message': 'Вы успешно зарегистрированы!'})
+            return JSONResponse(status_code=200, content={'message': 'Вы успешно зарегистрированы!'}), set_tokens(response, added_user.id)
         except IntegrityError as ie:
             await session.rollback()  # Откат транзакции
             logger.error(f"Ошибка интеграции с базой данных, откат транзакции: {ie}")
@@ -110,4 +110,3 @@ async def process_refresh_token(
         user: User = Depends(check_refresh_token)
 ):
     set_tokens(response, user.id)
-

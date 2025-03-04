@@ -37,7 +37,7 @@ async def check_refresh_token(
 ) -> User | None:
     """ Проверяем refresh_token и возвращаем пользователя."""
     if not token:
-        raise TokenExpiredException
+        return None
     try:
         payload = jwt.decode(
             token,
@@ -67,7 +67,7 @@ async def get_current_user(
 ) -> User | None:
     """Проверяем access_token и возвращаем пользователя."""
     if not token:
-        return TokenNotFound
+        return None
     try:
         # Декодируем токен
         payload = jwt.decode(token, settings.SECRET_KEY)

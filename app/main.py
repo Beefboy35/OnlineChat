@@ -69,4 +69,4 @@ app = create_app()
 
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="localhost", port=8009, reload=True)
+    uvicorn.run("main:app", host="localhost", port=8011, reload=True)

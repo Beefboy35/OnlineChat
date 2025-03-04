@@ -27,6 +27,10 @@ InvalidPasswordException = HTTPException(
     status_code=status.HTTP_400_BAD_REQUEST,
     detail='Пароль должен содержать не менее 8 символов(английские буквы) и не более 20, иметь хотя бы одну цифру и заглавную букву. Пример: kEyboard123'
 )
+NamesStartWithCapLetter = HTTPException(
+    status_code=status.HTTP_400_BAD_REQUEST,
+    detail="Имя и фамилия должны начинаться с заглавной буквы"
+)
 
 PasswordsDoNotMatchException = HTTPException(
     status_code=status.HTTP_403_FORBIDDEN,
