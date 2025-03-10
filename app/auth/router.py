@@ -12,7 +12,7 @@ from app.dependencies.auth_dep import get_current_user, check_refresh_token, is_
 from app.dependencies.dao_dep import get_session_with_commit, get_session_without_commit
 from app.auth.exceptions import UserAlreadyExistsException, CSRFTokenError, UserNotFoundException, \
     PasswordsDoNotMatchException
-from app.auth.dao import UsersDAO
+from app.dao.dao import UsersDAO
 from app.auth.schemas import SUserRegister, SUserAuth, SUserAddDB, SUserInfo, VerifyModel, EmailModel
 
 router = APIRouter()
@@ -32,12 +32,13 @@ async def register_user(response: Response,
                 raise CSRFTokenError
             if not is_the_same_password(user_data.password, user_data.confirm_password):
                 raise PasswordsDoNotMatchException
-            validate_credentials(user_data.first_name, user_data.last_name,
+            validate_credentials(user_data.nickname, user_data.first_name, user_data.last_name,
                                  user_data.password, user_data.email, user_data.phone_number)
             user_dao = UsersDAO(session)
             existing_user = await user_dao.find_one_or_none(filters=VerifyModel(
                 email=user_data.email,
-                phone_number=user_data.phone_number)
+                phone_number=user_data.phone_number,
+                nickname=user_data.nickname)
             )
             if existing_user:
                 raise UserAlreadyExistsException
@@ -49,7 +50,6 @@ async def register_user(response: Response,
             # возращаем сообщение об успехе и устанавливаем JWT токены
             return JSONResponse(status_code=200, content={'message': 'Вы успешно зарегистрированы!'}), set_tokens(response, added_user.id)
         except IntegrityError as ie:
-            await session.rollback()  # Откат транзакции
             logger.error(f"Ошибка интеграции с базой данных, откат транзакции: {ie}")
             return JSONResponse(status_code=409, content="Пользователь уже существует")
         except HTTPException as he:
@@ -109,4 +109,6 @@ async def process_refresh_token(
         response: Response,
         user: User = Depends(check_refresh_token)
 ):
+    if not user:
+        raise UserNotFoundException
     set_tokens(response, user.id)

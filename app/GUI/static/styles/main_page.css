@@ -1,0 +1,32 @@
+body {
+     font-family: 'Fredericka the Great', cursive;
+}
+
+.custom-height {
+    height: 70rem;
+}
+
+header {
+    position: relative;
+    transition: transform 0.4s ease;
+    transform: translateY(-75%);
+    width: 100%;
+}
+header:hover {
+    transform: translateY(0%);
+}
+.header-content {
+    background-color: #3b82f6;
+    padding: 16px;
+    width: 100%;
+    text-align: center;
+
+}
+
+.nav-links {
+    display: flex;
+    justify-content: center;
+    color: white;
+    text-decoration: none;
+}
+

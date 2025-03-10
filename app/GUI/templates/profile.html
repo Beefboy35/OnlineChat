@@ -1,10 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+    <link rel="stylesheet" href="GUI/static/styles/profile.css">
 </head>
 <body>
-$END$
+<div class="hidden fixed inset-0 bg-black opacity-50" id="darkenBg"></div>
+<div class="hidden fixed inset-0 flex items-center justify-center" id="profileForm">
+    <div class="bg-white p-6 rounded-lg shadow-xl flex flex-col items-center">
+        <h2 class="text-2xl font-bold pb-4">User information</h2>
+        <p class="pb-4 text-xl">Nickname: {{ nickname }}</p>
+        <p class="pb-4 text-xl">Full name: {{ first_name }} {{ last_name }}</p>
+        <p class="pb-4 text-xl">Phone number: {{ phone }}</p>
+        <button class="mt-4 bg-blue-600 text-white px-4 py-2 rounded focus:bg-blue-700 transition duration-200"
+                id="closeForm">Close
+        </button>
+    </div>
+</div>
 </body>
 </html>

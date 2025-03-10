@@ -18,6 +18,10 @@ UserIdNotFoundException = HTTPException(
     detail='Отсутствует идентификатор пользователя'
 )
 
+InvalidNicknameException = HTTPException(
+    status_code=status.HTTP_400_BAD_REQUEST,
+    detail="Никнейм должен содержать английские буквы(заглавные и прописные) и хотя бы одну цифру, длина 5-12 символов. Пример: Beefboy123"
+)
 # Неверная почта
 InvalidEmailException = HTTPException(
     status_code=status.HTTP_400_BAD_REQUEST,
@@ -57,7 +61,7 @@ InvalidTokenFormatException = HTTPException(
 # Токен отсутствует в заголовке
 TokenNotFound = HTTPException(
     status_code=status.HTTP_400_BAD_REQUEST,
-    detail='Токен отсутствует в заголовке'
+    detail='Пожалуйста обновите страницу или войдите повторно'
 )
 
 # Невалидный JWT токен

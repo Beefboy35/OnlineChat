@@ -17,10 +17,13 @@ from app.dependencies.dao_dep import get_session_without_commit
 templates = Jinja2Templates(directory='GUI/templates')
 router = APIRouter()
 @router.get("/", response_class=HTMLResponse)
-async def register_page(request: Request):
+async def register_page(request: Request,
+                        refresh_data: User | None = Depends(check_refresh_token)):
     token = secrets.token_hex(32)
     # сохраняем CSRF токен в сессии
     request.session["csrf_token"] = token
+    if refresh_data:
+        return RedirectResponse("/main_page")
     return templates.TemplateResponse("register.html", {"request": request, "csrf_token": token})
 
 
@@ -38,8 +41,8 @@ async def main_page(
                     ):
     if not user_data:
         user_data = refresh_data
-        if not user_data:
-            return RedirectResponse("/login")
+        if not refresh_data:
+            return RedirectResponse(url="/login")
     user = SUserInfo.model_validate(user_data)
     return templates.TemplateResponse("main_page.html", {
         "request": request,

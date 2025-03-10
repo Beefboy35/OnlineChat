@@ -18,11 +18,6 @@ class Base(AsyncAttrs, DeclarativeBase):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     created_at: Mapped[datetime] = mapped_column(TIMESTAMP, server_default=func.now())
-    updated_at: Mapped[datetime] = mapped_column(
-        TIMESTAMP,
-        server_default=func.now(),
-        onupdate=func.now()
-    )
 
     @declared_attr
     def __tablename__(cls) -> str:
@@ -58,4 +53,4 @@ class Base(AsyncAttrs, DeclarativeBase):
 
     def __repr__(self) -> str:
         """Строковое представление объекта для удобства отладки."""
-        return f"<{self.__class__.__name__}(id={self.id}, created_at={self.created_at}, updated_at={self.updated_at})>"
+        return f"<{self.__class__.__name__}(id={self.id}, created_at={self.created_at})>"

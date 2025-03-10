@@ -17,3 +17,4 @@ async def websocket_endpoint(websocket: WebSocket, room_id: int, user_id: int, n
     except WebSocketDisconnect:
         manager.disconnect(room_id, user_id)
         await manager.broadcast(f"{nickname} (ID: {user_id}) покинул чат.", room_id, user_id)
+

@@ -11,7 +11,7 @@ from GUI.router import router as gui_router
 from app.auth.router import router as router_auth
 from app.config import settings
 from app.WebSocket.router import router as ws_router
-
+from app.chat.router import router as chat_router
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncGenerator[dict, None]:
     """Управление жизненным циклом приложения."""
@@ -62,11 +62,10 @@ def register_routers(app: FastAPI) -> None:
     app.include_router(router_auth, tags=['Auth'], prefix="/auth")
     app.include_router(gui_router, tags=["GUI"])
     app.include_router(ws_router, tags=["WebSockets"], prefix="/ws")
-
-
+    app.include_router(chat_router, tags=["Chat"], prefix="/chat")
 # Создание экземпляра приложения
 app = create_app()
 
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="localhost", port=8011, reload=True)
+    uvicorn.run("main:app", host="localhost", port=8013, reload=True)

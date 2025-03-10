@@ -3,15 +3,14 @@ import secrets
 from authlib.jose.errors import InvalidTokenError
 from fastapi import Request, Depends
 from authlib.jose import jwt
-from loguru import logger
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.auth.dao import UsersDAO
+from app.dao.dao import UsersDAO
 from app.dao.models import User
 from app.config import settings
 from app.dependencies.dao_dep import get_session_without_commit
 from app.auth.exceptions import (
-    NoJwtException, TokenExpiredException, NoUserIdException, UserNotFoundException, TokenNotFound
+    NoJwtException, NoUserIdException, UserNotFoundException
 )
 
 

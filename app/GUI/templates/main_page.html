@@ -3,52 +3,67 @@
 <head>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <link rel="stylesheet" href="GUI/static/main_page.css">
+    <link rel="stylesheet" href="GUI/static/styles/profile.css">
+    <link rel="stylesheet" href="GUI/static/styles/header.css">
+    <link rel="stylesheet" href="GUI/static/styles/main_page.css">
+    <script type="module" src="GUI/static/scripts/main_page.js"></script>
     <meta charset="UTF-8">
     <title>Main page</title>
 </head>
-<body class="bg-gray-100 flex flex-col items-center p-4">
-<h1 class="text-2xl font-bold mb-4">Чат </h1>
-<label class="mb-1">Введите номер комнаты</label>
-<div class="flex flex-row mb-1">
-<input class="border border-gray-300 rounded-lg mr-2 p-1 focus:ring-2 focus:ring-blue-500"
-       type="number" id="roomId" placeholder="Номер комнаты">
-<button id="connectToTheRoom" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Выбрать</button>
-</div>
-<!-- Скрытый элемент для хранения данных комнаты -->
-<div id="room-data"
-     data-username="{{ nickname }}"
-     data-user-id="{{ user_id }}"
-     class="hidden">
-</div>
+<body class="bg-blue-100">
+<header>
+    <div class="header-content rounded-b-2xl">
+        <h1 class="text-white text-4xl font-bold">TelegramV2</h1>
+        <nav class="mt-2">
+            <ul class="nav-links">
+                <li id="getProfile1" class="mr-10 hover:text-gray-300 hover:cursor-pointer text-2xl">Мой профиль</li>
+                <li><a href="#" class="mr-10 hover:text-gray-300 text-2xl">Главная</a></li>
+                <li><a href="https://t.me/RealBeefBoy" class="hover:text-gray-300 text-2xl">Контакты</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+<div class="flex flex-col items-center p-4 text-3xl">
+    {% include 'profile.html' %}
+    <h1 class="text-3xl font-bold mb-4">Start chatting now!</h1>
+    <select class="border border-gray-300 rounded-lg mr-2 p-1 focus:ring-2 focus:ring-blue-500">
+        <option value="" disabled selected>Выбери функцию</option>
+        <option value="createChat()">Создать чат</option>
+        <option value="findFriends()">Искать собеседников</option>
+        <option value="addToChat()">Добавить в чат</option>
+        <option value="removeFromChat()">Удалить из чата</option>
+    </select>
+    <div class=" mb-1">
+        <input class="border border-gray-300 rounded-lg mr-2 p-1 focus:ring-2 focus:ring-blue-500"
+               type="number" id="roomId" placeholder="Номер комнаты">
+        <button id="createChat" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Выбрать</button>
+    </div>
+    <!-- Скрытый элемент для хранения данных комнаты -->
+    <div id="room-data"
+         data-username="{{ nickname }}"
+         data-user-id="{{ user_id }}"
+         class="hidden">
+    </div>
 
-<!-- Область сообщений -->
-<div id="messages"
-     class="w-full max-w-lg h-96 overflow-y-auto border border-gray-300 bg-white p-4 rounded-lg shadow-md">
-</div>
+    <!-- Область сообщений -->
+    <div id="messages"
+         class="w-full max-w-2xl custom-height overflow-y-auto border border-gray-300 bg-white p-4 rounded-lg shadow-md">
+    </div>
 
-<!-- Поле ввода и кнопка -->
-<div class="hidden fixed inset-0 bg-black opacity-50" id="darkenBg"></div>
-<div class="hidden fixed inset-0 flex items-center justify-center" id="profileForm">
-    <div class="bg-white p-6 rounded-lg shadow-xl flex flex-col items-center">
-            <h2 class="text-2xl font-bold pb-4">User Information</h2>
-            <p class="pb-4 text-xl">Nickname: {{ nickname }}</p>
-            <p class="pb-4 text-xl">Full name: {{ first_name }} {{ last_name }}</p>
-            <p class="pb-4 text-xl">Phone number: {{ phone }}</p>
-        <button class="mt-4 bg-blue-600 text-white px-4 py-2 rounded focus:bg-blue-700 transition duration-200" id="closeForm">Close</button>
+    <!-- Поле ввода и кнопка -->
+
+    <div class="flex mt-4 w-full max-w-2xl">
+        <h3 id="getProfile2" class="bg-blue-500 flex items-center p-2 border border-gray-300 hover:ring-1 hover:bg-blue-300 rounded-xl">{{nickname}}</h3>
+        <input id="messageInput"
+               type="text"
+               placeholder="Введите сообщение"
+               class="flex-1 p-2 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-2xl"/>
+        <button onclick="sendMessage()"
+                class="bg-blue-500 text-white px-4 py-2 rounded-r-lg hover:bg-blue-600">Отправить
+        </button>
     </div>
 </div>
-<div class="flex mt-4 w-full max-w-lg">
-    <h3 class="flex items-center p-2 border border-gray-300 ring-1 rounded-lg" id="getProfile">{{nickname}}</h3>
-    <input id="messageInput"
-           type="text"
-           placeholder="Введите сообщение"
-           class="flex-1 p-2 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500"/>
-    <button onclick="sendMessage()"
-            class="bg-blue-500 text-white px-4 py-2 rounded-r-lg hover:bg-blue-600">Отправить
-    </button>
-</div>
-<script type="module" src="GUI/static/main_page.js"></script>
+<script src="GUI/static/scripts/profile.js"></script>
 <script>
     let ws
     document.getElementById("messageInput").addEventListener("keypress", (e) => {
@@ -65,5 +80,6 @@
         }
     }
 </script>
+
 </body>
 </html>

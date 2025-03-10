@@ -10,7 +10,7 @@ from fastapi.responses import Response
 from app.config import settings
 
 from app.auth.exceptions import InvalidEmailException, InvalidPasswordException, InvalidPhoneNumberException, \
-    NamesStartWithCapLetter
+    NamesStartWithCapLetter, InvalidNicknameException
 from app.dao.models import User
 from app.dependencies.auth_dep import check_refresh_token
 
@@ -42,7 +42,21 @@ def is_the_same_password(password: str, conf_password: str):
     return password == conf_password
 
 
-def validate_credentials(first_name: str, last_name: str, password: str, email: str, phone_number: str):
+def validate_nickname(nickname: str) -> bool:
+    if not (5 <= len(nickname) <= 12):
+        return False
+    # Проверяем, что никнейм состоит только из английских букв и цифр, и не содержит пробелов
+    if not re.match("^[A-Za-z0-9]+$", nickname):
+        return False
+    if not re.search(r"[a-z]", nickname):
+        return False
+    if not any(char.isalnum() for char in nickname):
+        return False
+    return True
+
+def validate_credentials(nickname: str, first_name: str, last_name: str, password: str, email: str, phone_number: str):
+    if not validate_nickname(nickname):
+        raise InvalidNicknameException
     if first_name != first_name.capitalize() or last_name != last_name.capitalize():
         raise NamesStartWithCapLetter
     if not validate_password(password):

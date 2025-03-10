@@ -6,12 +6,12 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
     DB_URL: str = "postgresql+asyncpg://postgres:1234@localhost:5432/postgres"
-    SECRET_KEY: str
-    SESSION_KEY: str
+    SECRET_KEY: str = "123"
+    SESSION_KEY: str = "12345"
     ALGORITHM: str = "HS256"
-    ACCESS_TOKEN_ALIVE_TIME: int
-    REFRESH_TOKEN_ALIVE_TIME: int
-    BASE_URL: str
+    ACCESS_TOKEN_ALIVE_TIME: int = 30
+    REFRESH_TOKEN_ALIVE_TIME: int = 2880
+    BASE_URL: str = "http://localhost:8011"
     FORMAT_LOG: str = "{time:YYYY-MM-DD at HH:mm:ss} | {level} | {message}"
 
 

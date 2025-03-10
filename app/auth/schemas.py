@@ -7,6 +7,7 @@ from pydantic import BaseModel, ConfigDict,  Field, computed_field
 class VerifyModel(BaseModel):
     email: str = Field(description="Электронная почта")
     phone_number: str = Field(description="Номер телефона в международном формате, начинающийся с '+'")
+    nickname: str = Field(description="Никнейм английскими буквами или цифрами без пробелов, от 5 до 12 символов")
     model_config = ConfigDict(from_attributes=True)
 
 
@@ -14,7 +15,6 @@ class VerifyModel(BaseModel):
 class UserBase(VerifyModel):
     first_name: str = Field(max_length=50, description="Имя, от 3 до 50 символов")
     last_name: str = Field(max_length=50, description="Фамилия, от 3 до 50 символов")
-    nickname: str = Field(max_length=18, description="Никнейм, от 5 до 18 символов")
 
 
 

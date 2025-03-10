@@ -1,6 +1,15 @@
 const profileForm = document.getElementById("profileForm");
 const darkenBg = document.getElementById("darkenBg");
-document.getElementById("getProfile").addEventListener("click", () => {
+document.getElementById('getProfile1').addEventListener("click", () => {
+    darkenBg.classList.remove('hidden');
+    darkenBg.style.opacity = '0.5';
+    profileForm.classList.remove('hidden');
+    setTimeout(() => {
+        profileForm.style.opacity = '1';
+        profileForm.style.transform = 'scale(1)';
+    }, 10);
+});
+document.getElementById('getProfile2').addEventListener("click", () => {
     darkenBg.classList.remove('hidden');
     darkenBg.style.opacity = '0.5';
     profileForm.classList.remove('hidden');

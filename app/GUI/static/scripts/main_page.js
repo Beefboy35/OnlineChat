@@ -38,6 +38,6 @@ connectButton.addEventListener("click", async () => {
 
         message.textContent = messageData.text;
         messages.appendChild(message);
-        messages.scrollTop = messages.scrollHeight; // Автопрокрутка вниз
+        messages.scrollTop = messages.scrollHeight;
     };
 });
