@@ -98,7 +98,7 @@ async def get_me(user_data: User = Depends(get_current_user)):
     return user_data
 
 
-@router.get("/all_users/")
+@router.get("/all_users")
 async def get_all_users(session: AsyncSession = Depends(get_session_with_commit)
                         ) -> List[SUserInfo]:
     return await UsersDAO(session).find_all()

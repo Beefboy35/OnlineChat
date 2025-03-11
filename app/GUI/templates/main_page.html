@@ -9,7 +9,7 @@
     <meta charset="UTF-8">
     <title>Main page</title>
 </head>
-<body class="bg-blue-100">
+<body class="bg-blue-1ltk00">
 <header>
     <div class="header-content rounded-b-2xl">
         <h1 class="text-white text-4xl font-bold">TelegramV2</h1>
@@ -60,23 +60,23 @@
         </button>
     </div>
 </div>
-<script src="GUI/static/scripts/profile.js"></script>
 <script src="GUI/static/scripts/createChat.js"></script>
+    <script src="GUI/static/scripts/profile.js"></script>
 <script>
-    let ws
-    document.getElementById("messageInput").addEventListener("keypress", (e) => {
-        if (e.key === "Enter") {
-            sendMessage();
-        }
-    });
+<!--    let ws-->
+<!--    document.getElementById("messageInput").addEventListener("keypress", (e) => {-->
+<!--        if (e.key === "Enter") {-->
+<!--            sendMessage();-->
+<!--        }-->
+<!--    });-->
 
-    function sendMessage() {
-        const input = document.getElementById("messageInput");
-        if (input.value.trim()) {
-            ws.send(input.value);
-            input.value = '';
-        }
-    }
+<!--    function sendMessage() {-->
+<!--        const input = document.getElementById("messageInput");-->
+<!--        if (input.value.trim()) {-->
+<!--            ws.send(input.value);-->
+<!--            input.value = '';-->
+<!--        }-->
+<!--    }-->
 </script>
 
 </body>
