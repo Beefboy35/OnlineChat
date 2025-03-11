@@ -4,7 +4,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <link rel="stylesheet" href="GUI/static/styles/profile.css">
-    <link rel="stylesheet" href="GUI/static/styles/header.css">
     <link rel="stylesheet" href="GUI/static/styles/main_page.css">
     <script type="module" src="GUI/static/scripts/main_page.js"></script>
     <meta charset="UTF-8">
@@ -14,29 +13,27 @@
 <header>
     <div class="header-content rounded-b-2xl">
         <h1 class="text-white text-4xl font-bold">TelegramV2</h1>
-        <nav class="mt-2">
+        <nav class="hover:text-gray-300 hover:cursor-pointer text-2xl">
             <ul class="nav-links">
-                <li id="getProfile1" class="mr-10 hover:text-gray-300 hover:cursor-pointer text-2xl">Мой профиль</li>
-                <li><a href="#" class="mr-10 hover:text-gray-300 text-2xl">Главная</a></li>
-                <li><a href="https://t.me/RealBeefBoy" class="hover:text-gray-300 text-2xl">Контакты</a></li>
+                <li id="createChat" class="mr-8">Создать чат</li>
+                <li id="findFriends" class="mr-8">Искать собеседников</li>
+                <li id="addToChat" class="mr-8">Добавить в чат</li>
+                <li id="removeFromChat" class="mr-8">Удалить из чата</li>
+                <li id="getProfile1" class="mr-8">Мой профиль</li>
+                <li><a href="#" class="mr-8">Главная</a></li>
+                <li><a href="https://t.me/RealBeefBoy" target="_blank">Контакты</a></li>
             </ul>
         </nav>
     </div>
 </header>
 <div class="flex flex-col items-center p-4 text-3xl">
     {% include 'profile.html' %}
+    {% include 'createChat.html' %}
     <h1 class="text-3xl font-bold mb-4">Start chatting now!</h1>
-    <select class="border border-gray-300 rounded-lg mr-2 p-1 focus:ring-2 focus:ring-blue-500">
-        <option value="" disabled selected>Выбери функцию</option>
-        <option value="createChat()">Создать чат</option>
-        <option value="findFriends()">Искать собеседников</option>
-        <option value="addToChat()">Добавить в чат</option>
-        <option value="removeFromChat()">Удалить из чата</option>
-    </select>
     <div class=" mb-1">
         <input class="border border-gray-300 rounded-lg mr-2 p-1 focus:ring-2 focus:ring-blue-500"
                type="number" id="roomId" placeholder="Номер комнаты">
-        <button id="createChat" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Выбрать</button>
+        <button id="enterChat" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Выбрать</button>
     </div>
     <!-- Скрытый элемент для хранения данных комнаты -->
     <div id="room-data"
@@ -64,6 +61,7 @@
     </div>
 </div>
 <script src="GUI/static/scripts/profile.js"></script>
+<script src="GUI/static/scripts/createChat.js"></script>
 <script>
     let ws
     document.getElementById("messageInput").addEventListener("keypress", (e) => {

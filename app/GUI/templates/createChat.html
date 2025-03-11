@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="GUI/static/styles/profile.css">
+    <link rel="stylesheet" href="GUI/static/styles/createChatForm.css">
+</head>
+<body>
+<div id="createChatForm" class="hidden fixed inset-0 flex flex-col items-center">
+    <div class="bg-white p-6 rounded-lg shadow-xl flex flex-col items-center">
+        <h2 class="text-2xl font-bold pb-4">Fill in the details</h2>
+        <label class="block text-gray-700">Enter chat's title</label>
+        <input type="text" placeholder="title" name="title">
+        <label class="block text-gray-700">Add other users (Optional)</label>
+        <div id="usersList" class="relative">
+            <div id="selectedUsers" class="flex flex-wrap gap-2 mb-2"></div>
+            <input type="text" id="searchUsers" placeholder="Search users..." class="w-full p-2 border rounded">
+            <div id="usersDropdown" class="hidden absolute bg-white border rounded shadow-lg max-h-48 overflow-y-auto w-full z-10">
+                <!-- Список пользователей будет здесь -->
+            </div>
+        </div>
+        <button class="mt-4 bg-blue-600 text-white px-4 py-2 rounded focus:bg-blue-700 transition duration-200"
+                id="Create">Create chat
+        </button>
+        <button class="mt-4 bg-blue-600 text-white px-4 py-2 rounded focus:bg-blue-700 transition duration-200"
+                id="closeForm">Close
+        </button>
+    </div>
+</div>
+</body>
+</html>
