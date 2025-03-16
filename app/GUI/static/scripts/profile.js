@@ -28,3 +28,4 @@ document.getElementById("closeForm").addEventListener("click", () => {
         darkenBg.classList.add('hidden');
     }, 400);
 });
+

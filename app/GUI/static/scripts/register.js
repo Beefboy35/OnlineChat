@@ -3,6 +3,18 @@ document.getElementById("getLoggedIn").addEventListener("click", () => {
     window.location.href = "/login";
 });
 
+const togglePassword = document.getElementById("togglePassword")
+const toggleConfirmPassword = document.getElementById("toggleConfirmPassword")
+togglePassword.addEventListener('click', () => {
+    const passwordField = document.getElementById("password")
+    passwordField.type = passwordField.type === "password" ? "type" : "password";
+});
+toggleConfirmPassword.addEventListener('click', () => {
+    const passwordField = document.getElementById("confirm_password")
+    passwordField.type = passwordField.type === "password" ? "type" : "password";
+});
+
+
 const errorBlock = document.getElementById("showError");
 document.querySelector('form').addEventListener('submit', async function(event) {
     event.preventDefault(); // Не отправлять форму стандартным образом
@@ -35,7 +47,7 @@ document.querySelector('form').addEventListener('submit', async function(event) 
            errorBlock.classList.remove('hidden')
            setTimeout(() => {
             errorBlock.classList.add("hidden");
-           }, 2000);
+           }, 3000);
            console.error("Ошибка при регистрации:", error.response ? error.response.data : error);
        }
    });

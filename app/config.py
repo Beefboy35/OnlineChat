@@ -5,7 +5,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    DB_URL: str = "postgresql+asyncpg://postgres:1234@localhost:5432/postgres"
+    DB_URL: str = "postgresql+asyncpg://postgres:1234@localhost:5432/test_chat"
     SECRET_KEY: str = "123"
     SESSION_KEY: str = "12345"
     ALGORITHM: str = "HS256"

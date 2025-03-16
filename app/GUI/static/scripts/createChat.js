@@ -1,20 +1,19 @@
 
-    const createChatButton = document.getElementById("createChat");
-    const createChatForm = document.getElementById("createChatForm");
+const createChatButton = document.getElementById("createChat");
+const createChatForm = document.getElementById("createChatForm")
+// Открытие формы создания чата
+createChatButton.addEventListener("click", () => {
+    darkenBg.classList.remove("hidden");
+    createChatForm.classList.remove("hidden");
+});
+createChatButton.addEventListener("click", () => {
+    darkenBg.classList.remove('hidden');
+    darkenBg.style.opacity = '0.5';
+    createChatForm.classList.remove('hidden');
+    setTimeout(() => {
+        createChatForm.style.opacity = '1';
+        createChatForm.style.transform = 'scale(1)';
+    }, 10);
+});
 
-    // Открытие формы создания чата
-    createChatButton.addEventListener("click", () => {
-        darkenBg.classList.remove("hidden");
-        createChatForm.classList.remove("hidden");
-    });
 
-    // Закрытие формы создания чата
-    document.getElementById("closeForm").addEventListener("click", () => {
-        createChatForm.style.opacity = '0';
-        createChatForm.style.transform = 'scale(0.1)';
-        darkenBg.style.opacity = '0';
-        setTimeout(() => {
-            createChatForm.classList.add('hidden');
-            darkenBg.classList.add('hidden');
-        }, 400);
-    });

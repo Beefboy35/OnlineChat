@@ -27,11 +27,16 @@
     <input type="text" name="phone" required
            class="w-full p-2 border border-gray-300 rounded-lg mt-2 focus:ring-2 focus:ring-blue-500">
     <label class="block text-gray-700">Введите пароль</label>
-    <input type="password" name="password" required
-           class="w-full p-2 border border-gray-300 rounded-lg mt-2 focus:ring-2 focus:ring-blue-500">
+    <div class="relative">
+        <input type="password" id="password" name="password" required class="w-full p-2 border border-gray-300 rounded-lg mt-2">
+        <span id="togglePassword" class="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer">👁️</span>
+    </div>
+
     <label class="block text-gray-700">Подтвердите пароль</label>
-    <input type="password" name="confirm_password" required
-           class="w-full p-2 border border-gray-300 rounded-lg mt-2 focus:ring-2 focus:ring-blue-500">
+    <div class="relative">
+        <input type="password" id="confirm_password" name="confirm_password" required class="w-full p-2 border border-gray-300 rounded-lg mt-2">
+        <span id="toggleConfirmPassword" class="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer">👁️</span>
+    </div>
     <div id="showError" class="hidden text-red-500 mt-2 flex items-center justify-center"></div>
     <button type="submit" class="w-full bg-blue-500 text-white px-4 py-2 rounded-lg mt-4 hover:bg-blue-600">Войти в
         чат

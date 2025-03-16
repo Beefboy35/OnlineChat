@@ -90,7 +90,7 @@ async def auth_user(
 async def logout(response: Response):
     response.delete_cookie("user_access_token")
     response.delete_cookie("user_refresh_token")
-    return {'message': 'Пользователь успешно вышел из системы'}
+    return JSONResponse(status_code=200, content="You successfully logged out! Be right back!")
 
 
 @router.get("/me")

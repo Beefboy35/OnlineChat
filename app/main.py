@@ -22,10 +22,10 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[dict, None]:
 
 def create_app() -> FastAPI:
     """
-   Создание и конфигурация FastAPI приложения.
+   FastAPI app configuration
 
    Returns:
-       Сконфигурированное приложение FastAPI
+       Configured  FastAPI app
    """
     app = FastAPI(
         title="Websocket Chat",
@@ -68,4 +68,4 @@ app = create_app()
 
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="localhost", port=8015, reload=True)
+    uvicorn.run("main:app", host="localhost", port=8019, reload=True)
