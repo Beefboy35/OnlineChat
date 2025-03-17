@@ -30,6 +30,6 @@ document.querySelector('form').addEventListener('submit', async (event) => {
         console.error("Ошибка при регистрации:", error);
         setTimeout(() => {
             errorBlock.classList.add('hidden');
-        }, 2000);
+        }, 3000);
       }
 });

@@ -20,15 +20,15 @@ router = APIRouter()
 
 
 @router.post("/create_chat")
-async def create_chat(chat_data: CreateChat,
+async def create_chat(data: VerifyChat,
                       user: User = Depends(get_current_user),
                       session: AsyncSession = Depends(get_session_with_commit)):
     try:
         if not user:
-            raise TokenNotFound
-        if await ChatDAO(session).find_one_or_none(VerifyChat(title=chat_data.title)):
-            raise ChatAlreadyExistsException
-        chat = await ChatDAO(session).add(CreateChat(title=chat_data.title, creator_id=user.id))
+            return TokenNotFound
+        if await ChatDAO(session).find_one_or_none(VerifyChat(title=data.title)):
+            return ChatAlreadyExistsException
+        chat = await ChatDAO(session).add(CreateChat(title=data.title, creator_id=user.id))
         await ChatMemberDAO(session).add(AddChatMember(user_id=user.id, chat_id=chat.id))
         return JSONResponse(status_code=200, content=f"Chat {chat.title} successfully created")
     except HTTPException as he:
@@ -42,7 +42,7 @@ async def add_to_chat(nickname: str,
                       session: AsyncSession = Depends(get_session_with_commit)):
     try:
         if not user:
-            raise TokenNotFound
+            return TokenNotFound
         chat = await ChatDAO(session).find_one_or_none(CreateChat(title=title, creator_id=user.id))
         if not chat:
             raise ChatNotFound
@@ -62,7 +62,7 @@ async def find_by_symbols(description: str,
                         session: AsyncSession = Depends(get_session_without_commit)):
     try:
         if not user:
-            raise TokenNotFound
+            return TokenNotFound
         people = await UsersDAO(session).find_users_by_symbols(description)
         return people
     except HTTPException as he:

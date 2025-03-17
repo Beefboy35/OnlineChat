@@ -47,7 +47,7 @@ document.querySelector('form').addEventListener('submit', async function(event) 
            errorBlock.classList.remove('hidden')
            setTimeout(() => {
             errorBlock.classList.add("hidden");
-           }, 3000);
+           }, 4000);
            console.error("Ошибка при регистрации:", error.response ? error.response.data : error);
        }
    });

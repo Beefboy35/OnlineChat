@@ -1,9 +1,10 @@
 from starlette import status
 from starlette.exceptions import HTTPException
+from starlette.responses import JSONResponse
 
-ChatAlreadyExistsException = HTTPException(
+ChatAlreadyExistsException = JSONResponse(
     status_code=status.HTTP_409_CONFLICT,
-    detail="Such chat already exists"
+    content="Such chat already exists"
 )
 
 ChatNotFound = HTTPException(

@@ -6,6 +6,7 @@ body {
     height: 70rem;
 }
 
+
 header {
     position: relative;
     transition: transform 0.4s ease;
@@ -20,6 +21,8 @@ header:hover {
     padding: 16px;
     width: 100%;
     text-align: center;
+     overflow-x: auto;
+    white-space: nowrap;
 
 }
 
