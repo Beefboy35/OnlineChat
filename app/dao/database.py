@@ -25,19 +25,19 @@ class Base(AsyncAttrs, DeclarativeBase):
 
     def to_dict(self, exclude_none: bool = False):
         """
-        Преобразует объект модели в словарь.
+        Parses a model object into python dictionary.
 
         Args:
-            exclude_none (bool): Исключать ли None значения из результата
+            exclude_none (bool): Whether to exclude None values from the dict
 
         Returns:
-            dict: Словарь с данными объекта
+            dict: Dictionary with object data in it
         """
         result = {}
         for column in inspect(self.__class__).columns:
             value = getattr(self, column.key)
 
-            # Преобразование специальных типов данных
+            # Parse special data types
             if isinstance(value, datetime):
                 value = value.isoformat()
             elif isinstance(value, Decimal):
@@ -45,12 +45,12 @@ class Base(AsyncAttrs, DeclarativeBase):
             elif isinstance(value, uuid.UUID):
                 value = str(value)
 
-            # Добавляем значение в результат
+            # Add value to the result
             if not exclude_none or value is not None:
                 result[column.key] = value
 
         return result
 
     def __repr__(self) -> str:
-        """Строковое представление объекта для удобства отладки."""
+        """String object view for better debugging."""
         return f"<{self.__class__.__name__}(id={self.id}, created_at={self.created_at})>"

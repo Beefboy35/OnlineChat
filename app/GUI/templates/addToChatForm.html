@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="GUI/static/styles/form_fade_away.css">
+</head>
+<body>
+<div id="addToChatForm"
+     class="hidden fixed inset-0 flex flex-col justify-center items-center bg-gray-900 bg-opacity-50">
+    <div class="bg-white p-6 rounded-lg shadow-xl flex flex-col items-center w-96">
+        <div class="flex flex-row gap-9">
+            <button id="addToChat"
+                    class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-400">Add
+            </button>
+        </div>
+        <div class="flex flex-col items-center w-full">
+            <input id="findUsers" type="text" placeholder="Enter user's name"
+                   class="w-full p-2 border border-gray-300 rounded-lg mt-2 focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+            <div id="displayUsers" class="w-full mt-2 space-y-2">
+                <!-- Users will be displayed here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    document.getElementById('findUsers').addEventListener('input', async (event) => {
+        const searchText = event.target.value;
+        const displayUsers = document.getElementById('displayUsers');
+        displayUsers.innerHTML = ''; // Clear previous results
+
+        if (searchText.length > 0) {
+            try {
+                const response = await axios.get(`/chat/find_friends?description=${encodeURIComponent(searchText)}`);
+                response.data.forEach(user => {
+                    const userElement = document.createElement('div');
+                    userElement.className = 'p-4 bg-white rounded-lg shadow hover:shadow-md transition-shadow duration-200';
+                    userElement.innerHTML = `
+                        <h3 class="text-xl font-semibold text-gray-800">${user.nickname}</h3>
+                        <h4 class="text-lg text-gray-600">${user.first_name} ${user.last_name}</h4>
+                    `;
+                    displayUsers.appendChild(userElement);
+                });
+            } catch {
+                const errorElement = document.createElement('div');
+                errorElement.className = 'p-4 bg-red-100 text-red-700 rounded-lg text-center';
+                errorElement.textContent = 'User not found';
+                displayUsers.appendChild(errorElement);
+                setTimeout(() => {
+                    errorElement.innerText = "";
+                }, 3000);
+            }
+        }
+    });
+
+
+</script>
+</body>
+</html>

@@ -8,27 +8,25 @@
     <meta charset="UTF-8">
     <title>Main page</title>
 </head>
-<body class="bg-blue-1ltk00">
-<header>
-    <div class="header-content rounded-b-2xl">
+<body class="bg-blue-100 h-full overflow-hidden">
+<header class="w-full">
+    <div class="header-content bg-blue-500 rounded-b-2xl px-4 py-4 w-full text-center">
         <h1 class="text-white text-4xl font-bold mb-2">TelegramV2</h1>
         <nav class="hover:text-gray-300 hover:cursor-pointer text-2xl">
-            <ul class="nav-links">
-                <li id="createChat" class="mr-8">Создать чат</li>
-                <li id="findFriends" class="mr-8">Искать собеседников</li>
-                <li id="addToChat" class="mr-8">Добавить в чат</li>
-                <li id="removeFromChat" class="mr-8">Удалить из чата</li>
-                <li id="getProfile1" class="mr-8">Мой профиль</li>
-                <li><a href="#" class="mr-8">Главная</a></li>
-                <li><a href="https://t.me/RealBeefBoy" target="_blank">Контакты</a></li>
+            <ul class="nav-links flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-8 md:justify-center">
+                 <li id="createChat"><span class="inline-block">Создать чат</span></li>
+                <li id="addToChat"><span class="inline-block">Добавить в чат</span></li>
+                <li id="removeFromChat"><span class="inline-block">Удалить из чата</span></li>
+                <li id="getProfile1"><span class="inline-block">Мой профиль</span></li>
             </ul>
         </nav>
     </div>
 </header>
-<div class="flex flex-col items-center p-4 text-3xl">
+
+<div class="flex flex-col items-center p-4 text-3xl h-[calc(100vh-220px)] overflow-y-auto"> <!-- Ограничение высоты и прокрутка -->
     {% include 'profile.html' %}
     {% include 'createChat.html' %}
-    {% include 'find_friends_form.html' %}
+    {% include 'addToChatForm.html' %}
     <h1 class="text-3xl font-bold mb-4">Start chatting now!</h1>
     <div class="mb-1 flex flex-col">
         <input class="border border-gray-300 rounded-lg mr-2 p-1 focus:ring-2 focus:ring-blue-500"
@@ -48,7 +46,6 @@
     </div>
 
     <!-- Поле ввода и кнопка -->
-
     <div class="flex mt-4 w-full max-w-2xl">
         <h3 id="getProfile2" class="bg-blue-500 flex items-center p-2 border border-gray-300 hover:ring-1 hover:bg-blue-300 rounded-xl">{{nickname}}</h3>
         <input id="messageInput"
@@ -60,6 +57,7 @@
         </button>
     </div>
 </div>
+<script src="GUI/static/scripts/addToChat.js"></script>
 <script src="GUI/static/scripts/createChat.js"></script>
     <script src="GUI/static/scripts/profile.js"></script>
 <script>

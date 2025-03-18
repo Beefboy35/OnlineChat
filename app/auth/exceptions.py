@@ -1,5 +1,5 @@
 from fastapi import status, HTTPException
-from starlette.responses import JSONResponse
+
 
 # Пользователь уже существует
 UserAlreadyExistsException = HTTPException(
@@ -60,9 +60,9 @@ InvalidTokenFormatException = HTTPException(
 
 
 # Токен отсутствует в заголовке
-TokenNotFound = JSONResponse(
+TokenNotFound = HTTPException(
     status_code=status.HTTP_400_BAD_REQUEST,
-    content='Please update the page or log in repeatedly'
+    detail='Please update the page or log in repeatedly'
 )
 
 # Невалидный JWT токен

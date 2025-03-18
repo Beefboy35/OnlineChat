@@ -4,6 +4,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from loguru import logger
 from pydantic import BaseModel
 from sqlalchemy.ext.asyncio import AsyncSession
+from starlette import status
 from starlette.responses import JSONResponse
 
 from app.dao.dao import UsersDAO
@@ -23,11 +24,15 @@ router = APIRouter()
 async def create_chat(data: VerifyChat,
                       user: User = Depends(get_current_user),
                       session: AsyncSession = Depends(get_session_with_commit)):
+    if len(data.title) < 5:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="The name of chat must be longer than 5 symbols")
     try:
         if not user:
-            return TokenNotFound
+            raise TokenNotFound
         if await ChatDAO(session).find_one_or_none(VerifyChat(title=data.title)):
-            return ChatAlreadyExistsException
+            raise ChatAlreadyExistsException
         chat = await ChatDAO(session).add(CreateChat(title=data.title, creator_id=user.id))
         await ChatMemberDAO(session).add(AddChatMember(user_id=user.id, chat_id=chat.id))
         return JSONResponse(status_code=200, content=f"Chat {chat.title} successfully created")
@@ -62,7 +67,7 @@ async def find_by_symbols(description: str,
                         session: AsyncSession = Depends(get_session_without_commit)):
     try:
         if not user:
-            return TokenNotFound
+            raise TokenNotFound
         people = await UsersDAO(session).find_users_by_symbols(description)
         return people
     except HTTPException as he:

@@ -2,10 +2,7 @@
 const createChatButton = document.getElementById("createChat");
 const createChatForm = document.getElementById("createChatForm")
 // Открытие формы создания чата
-createChatButton.addEventListener("click", () => {
-    darkenBg.classList.remove("hidden");
-    createChatForm.classList.remove("hidden");
-});
+
 createChatButton.addEventListener("click", () => {
     darkenBg.classList.remove('hidden');
     darkenBg.style.opacity = '0.5';

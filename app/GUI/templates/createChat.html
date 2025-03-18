@@ -12,13 +12,7 @@
 
 <div id="createChatForm" class="hidden fixed inset-0 flex flex-col justify-center items-center">
     <div class="bg-white p-6 rounded-lg shadow-xl flex flex-col items-center">
-        <h2 class="text-2xl font-bold pb-4">Fill in the details</h2>
-        <label class="block text-gray-700">Enter chat's title</label>
-        <input type="text" id="chatTitle"
-               placeholder="title" name="title"
-               class="w-full p-2 border border-gray-300 rounded-lg mt-2">
-        <div id="statusMessage" class="hidden bg-blue-700 p-3 rounded-lg shadow-xl mt-2"></div>
-        <div class="flex flex-row gap-7">
+        <div class="flex flex-row gap-9 mb-3">
             <button class="mt-4 bg-blue-600 text-white px-4 py-2 rounded focus:bg-blue-700 transition duration-200"
                     id="Create">Create chat
             </button>
@@ -26,11 +20,18 @@
                     id="closeCreateForm">Close
             </button>
         </div>
+        <h2 class="text-2xl font-bold pb-4">Fill in the details</h2>
+        <label class="block text-gray-700">Enter chat's title</label>
+        <input type="text" id="chatTitle"
+               placeholder="title" name="title"
+               class="w-full p-2 border border-gray-300 rounded-lg mt-2">
+        <div id="statusMessage" class="hidden bg-blue-700 p-3 rounded-lg shadow-xl mt-2"></div>
     </div>
 </div>
 
 <script>
     document.getElementById("closeCreateForm").addEventListener("click", () => {
+
         createChatForm.style.opacity = '0';
         createChatForm.style.transform = 'scale(0.1)';
         darkenBg.style.opacity = '0';
@@ -53,17 +54,19 @@ document.getElementById("Create").addEventListener("click", async () => {
             statusMessage.style.display = "none"
         }, 3000)
         } catch (e) {
-            console.error("Error creating chat:", e)
-            statusMessage.style.display = "block"
-            if (e.status === 409) {
-                statusMessage.innerText= `Chat ${title_name} already exists`
-            } else {
-                statusMessage.innerText= "Something went wrong. Try again later"
-            }
-            setTimeout(() => {
-                statusMessage.style.display = "none"
-            }, 3000)
-        }
+    console.error("Error creating chat:", e);
+    statusMessage.style.display = "block";
+
+    if (e.response) {
+        statusMessage.innerText = e.response.data.detail || "Something went wrong. Try again later";
+    } else {
+        // Для ошибок сети или других
+        statusMessage.innerText = "Something went wrong. Try again later";
+    }
+    setTimeout(() => {
+        statusMessage.style.display = "none";
+    }, 3000);
+}
 })
 
 </script>

@@ -3,9 +3,9 @@
     opacity: 0.5;
 }
 
-#profileForm, #createChatForm {
+#profileForm, #createChatForm, #addToChatForm {
     transition: opacity 0.4s ease, transform 0.4s ease;
 }
-#profileForm, #createChatForm {
+#profileForm, #createChatForm, #addToChatForm {
     opacity: 0;
 }
