@@ -13,3 +13,7 @@ class AddChatMember(BaseModel):
     user_id: int
     chat_id: int
 
+class VerifyCreator(BaseModel):
+    creator_id: int
+
+

@@ -55,7 +55,7 @@ def create_app() -> FastAPI:
 
 
 def register_routers(app: FastAPI) -> None:
-    """Регистрация роутеров приложения."""
+    """App's routers registration."""
     # Корневой роутер
     root_router = APIRouter()
     app.include_router(root_router, tags=["root"])

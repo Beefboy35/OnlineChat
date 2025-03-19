@@ -9,25 +9,24 @@
     <link rel="stylesheet" href="GUI/static/styles/form_fade_away.css">
 </head>
 <body>
-<div id="addToChatForm"
+<div id="removeForm"
      class="hidden fixed inset-0 flex flex-col justify-center items-center">
     <div class="bg-white p-6 rounded-lg shadow-xl flex flex-col items-center w-96">
-        <div class="flex flex-row gap-9">
-            <button id="addToChat"
+        <div class="flex flex-row gap-9 mb-2">
+            <button id="removeFromChat"
                     class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-400">Add
             </button>
-            <button id="closeAddForm"
+            <button id="closeRemoveForm"
                     class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-400">Close
             </button>
-
         </div>
-        <div class="flex flex-col items-center w-full p-2">
-            <select name="myChats" id="ownersChats">
+        <select name="myChats" id="ownersChats2">
             <option selected disabled>Choose the chat</option>
         </select>
-            <input id="findUsers" type="text" placeholder="Enter user's name"
+        <div class="flex flex-col items-center w-full">
+            <input id="findToRemove" type="text" placeholder="Enter user's name"
                    class="w-full p-2 border border-gray-300 rounded-lg mt-2 focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
-            <div id="displayUsers" class="w-full mt-2 space-y-2">
+            <div id="displayToRemove" class="w-full mt-2 space-y-2">
                 <!-- Users will be displayed here -->
             </div>
         </div>
@@ -35,17 +34,17 @@
 </div>
 
 <script>
-     document.getElementById("closeAddForm").addEventListener("click", () => {
-        AddToChatForm.style.opacity = '0';
-        AddToChatForm.style.transform = 'scale(0.1)';
+     document.getElementById("closeRemoveForm").addEventListener("click", () => {
+        RemoveFromForm.style.opacity = '0';
+        RemoveFromForm.style.transform = 'scale(0.1)';
         darkenBg.style.opacity = '0';
         setTimeout(() => {
-            AddToChatForm.classList.add('hidden');
+            RemoveFromForm.classList.add('hidden');
             darkenBg.classList.add('hidden');
         }, 400);
     });
-    document.getElementById('ownersChats').addEventListener('focus', async () => {
-        const selectElement = document.getElementById('ownersChats')
+    document.getElementById('ownersChats2').addEventListener('focus', async () => {
+        const selectElement = document.getElementById('ownersChats2')
         try {
             const response = await axios('chat/get_my_chats')
             const chats = response.data
@@ -62,11 +61,10 @@
             console.error('Error fetching chats:', e);
         }
     })
-
-    document.getElementById('findUsers').addEventListener('input', async (event) => {
+    document.getElementById('findToRemove').addEventListener('input', async (event) => {
         const searchText = event.target.value;
-        const displayUsers = document.getElementById('displayUsers');
-        displayUsers.innerHTML = ''; // Clear previous results
+        const displayUsers = document.getElementById('displayToRemove');
+        displayUsers.innerHTML = '';
 
         if (searchText.length > 0) {
             try {
@@ -91,8 +89,6 @@
             }
         }
     });
-
-
 </script>
 </body>
 </html>

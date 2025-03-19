@@ -11,7 +11,7 @@ from app.dao.dao import UsersDAO
 from app.auth.exceptions import TokenNotFound, UserNotFoundException
 from app.dao.dao import ChatDAO, ChatMemberDAO
 from app.chat.exceptions import ChatAlreadyExistsException, ChatNotFound
-from app.chat.schemas import CreateChat, VerifyChat, AddChatMember, VerifyNickname
+from app.chat.schemas import CreateChat, VerifyChat, AddChatMember, VerifyNickname, VerifyCreator
 from app.dao.models import User
 from app.dependencies.auth_dep import get_current_user
 from app.dependencies.dao_dep import get_session_with_commit, get_session_without_commit
@@ -62,9 +62,10 @@ async def add_to_chat(nickname: str,
 
 
 @router.get("/find_friends")
-async def find_by_symbols(description: str,
-                          user: User = Depends(get_current_user),
-                        session: AsyncSession = Depends(get_session_without_commit)):
+async def find_by_symbols(
+        description: str,
+        user: User = Depends(get_current_user),
+        session: AsyncSession = Depends(get_session_without_commit)):
     try:
         if not user:
             raise TokenNotFound
@@ -74,4 +75,16 @@ async def find_by_symbols(description: str,
         logger.error(f"HTTP Error: {he}")
         return JSONResponse(status_code=he.status_code, content=str(he.detail))
 
+@router.get("/get_my_chats")
+async def get_user_chats(
+        user: User = Depends(get_current_user),
+        session: AsyncSession = Depends(get_session_without_commit)):
+    try:
+        if not user:
+            raise TokenNotFound
+        chats = await ChatDAO(session).find_all(VerifyCreator(creator_id=user.id))
+        return chats
+    except HTTPException as he:
+        logger.error(f"HTTP Error: {he}")
+        return JSONResponse(status_code=he.status_code, content=str(he.detail))
 
