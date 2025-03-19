@@ -14,10 +14,10 @@
         <h1 class="text-white text-4xl font-bold mb-2">TelegramV2</h1>
         <nav class="hover:text-gray-300 hover:cursor-pointer text-2xl">
             <ul class="nav-links flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-8 md:justify-center">
-                 <li id="createChat"><span class="inline-block">Создать чат</span></li>
-                <li id="addToChat"><span class="inline-block">Добавить в чат</span></li>
-                <li id="removeFromChat"><span class="inline-block">Удалить из чата</span></li>
-                <li id="getProfile1"><span class="inline-block">Мой профиль</span></li>
+                 <li id="createChat"><span class="inline-block">Create chat</span></li>
+                <li id="addToChat"><span class="inline-block">Add user</span></li>
+                <li id="removeFromChat"><span class="inline-block">Remove user</span></li>
+                <li id="getProfile1"><span class="inline-block">Profile</span></li>
             </ul>
         </nav>
     </div>
@@ -46,17 +46,29 @@
          class="w-full max-w-2xl custom-height overflow-y-auto border border-gray-300 bg-white p-4 rounded-lg shadow-md">
     </div>
 
+    <div class="flex flex-wrap items-center justify-center mt-4 gap-2">
+    <!-- Никнейм -->
+    <h3 id="getProfile2"
+        class="bg-blue-500 flex items-center p-2 border border-gray-300 hover:ring-1
+        hover:bg-blue-300 rounded-xl whitespace-nowrap text-center">
+        {{nickname}}
+    </h3>
+
     <!-- Поле ввода и кнопка -->
-    <div class="flex mt-4 w-full max-w-2xl">
-        <h3 id="getProfile2" class="bg-blue-500 flex items-center p-2 border border-gray-300 hover:ring-1 hover:bg-blue-300 rounded-xl">{{nickname}}</h3>
+    <div class="flex flex-1 min-w-[200px] max-w-[600px]">
         <input id="messageInput"
                type="text"
-               placeholder="Введите сообщение"
-               class="flex-1 p-2 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-2xl"/>
+               placeholder="Message"
+               class="flex-1 p-2 border border-gray-300 rounded-l-lg
+               focus:outline-none focus:ring-2 focus:ring-blue-500 text-2xl w-full"/>
+
         <button onclick="sendMessage()"
-                class="bg-blue-500 text-white px-4 py-2 rounded-r-lg hover:bg-blue-600">Отправить
+                class="bg-blue-500 text-white px-3 py-2
+                rounded-r-lg hover:bg-blue-600 whitespace-nowrap">
+            Send
         </button>
     </div>
+</div>
 </div>
 <script src="GUI/static/scripts/addToChat.js"></script>
 <script src="GUI/static/scripts/createChat.js"></script>

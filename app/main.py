@@ -55,7 +55,9 @@ def create_app() -> FastAPI:
 
 
 def register_routers(app: FastAPI) -> None:
-    """App's routers registration."""
+    """
+    Registers App's routers
+    """
     # Корневой роутер
     root_router = APIRouter()
     app.include_router(root_router, tags=["root"])
@@ -68,4 +70,4 @@ app = create_app()
 
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="localhost", port=8001, reload=True)
+    uvicorn.run("main:app", host="localhost", port=8002, reload=True)
