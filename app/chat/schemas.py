@@ -17,3 +17,6 @@ class VerifyCreator(BaseModel):
     creator_id: int
 
 
+class UserToAdd(VerifyNickname):
+    title: str
+

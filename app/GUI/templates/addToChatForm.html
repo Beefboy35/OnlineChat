@@ -13,7 +13,7 @@
      class="hidden fixed inset-0 flex flex-col justify-center items-center">
     <div class="bg-white p-6 rounded-lg shadow-xl flex flex-col items-center w-80">
         <div class="flex flex-row gap-9">
-            <button id="addToChat"
+            <button id="addToChatButt"
                     class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-400">Add
             </button>
             <button id="closeAddForm"
@@ -44,6 +44,26 @@
             darkenBg.classList.add('hidden');
         }, 400);
     });
+    document.getElementById("addToChatButt").addEventListener("click", async () => {
+        const selectedChat = document.getElementById('ownersChats').value;
+        const selectedUser = document.getElementById('findUsers').value;
+        if (!selectedChat || !selectedUser) {
+            alert('Please select a chat and a user.');
+            return;
+        }
+        try {
+            const response = await axios.post("chat/add_to_chat", {
+                nickname: selectedUser,
+                title: selectedChat
+            })
+            if (response.status === 200) {
+            alert(response.data);
+        }
+        } catch (e) {
+            console.error('Error adding user to chat:', e)
+            alert('Failed to add user to chat. Please try again.')
+        }
+    })
     document.getElementById('ownersChats').addEventListener('focus', async () => {
         const selectElement = document.getElementById('ownersChats')
         try {

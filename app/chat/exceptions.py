@@ -9,5 +9,5 @@ ChatAlreadyExistsException = HTTPException(
 
 ChatNotFound = HTTPException(
     status_code=status.HTTP_404_NOT_FOUND,
-    detail="Чат не существует или вы не являетесь его творцом"
+    detail="Chat doesn't exist or you are not its creator"
 )

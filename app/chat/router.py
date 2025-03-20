@@ -40,22 +40,22 @@ async def create_chat(data: VerifyChat,
         logger.error(f"HTTP Error: {he}")
         return JSONResponse(status_code=he.status_code, content=str(he.detail))
 
-@router.post("/add_to_chat/{nickname}")
+@router.post("/add_to_chat")
 async def add_to_chat(nickname: str,
-                      title: str,
+                      chat_id: int,
                       user: User = Depends(get_current_user),
                       session: AsyncSession = Depends(get_session_with_commit)):
     try:
         if not user:
             return TokenNotFound
-        chat = await ChatDAO(session).find_one_or_none(CreateChat(title=title, creator_id=user.id))
+        chat = await ChatDAO(session).find_one_or_none(AddChatMember(user_id=user.id, chat_id=chat_id))
         if not chat:
             raise ChatNotFound
         user_to_add = await UsersDAO(session).find_one_or_none(VerifyNickname(nickname=nickname))
         if not user_to_add:
             raise UserNotFoundException
         await ChatMemberDAO(session).add(AddChatMember(user_id=user_to_add.id, chat_id=chat.id))
-        return JSONResponse(status_code=200, content=f"User {nickname} successfully added to {title}")
+        return JSONResponse(status_code=200, content=f"User {nickname} successfully added to {chat_id}")
     except HTTPException as he:
         logger.error(f"HTTP Error: {he}")
         return JSONResponse(status_code=he.status_code, content=str(he.detail))
