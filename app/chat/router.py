@@ -8,10 +8,10 @@ from starlette import status
 from starlette.responses import JSONResponse
 
 from app.dao.dao import UsersDAO
-from app.auth.exceptions import TokenNotFound, UserNotFoundException
+from app.auth.exceptions import TokenNotFound, UserNotFoundException, UserAlreadyExistsException
 from app.dao.dao import ChatDAO, ChatMemberDAO
 from app.chat.exceptions import ChatAlreadyExistsException, ChatNotFound
-from app.chat.schemas import CreateChat, VerifyChat, AddChatMember, VerifyNickname, VerifyCreator
+from app.chat.schemas import CreateChat, VerifyChat, VerifyNickname, VerifyCreator, AddChatMember
 from app.dao.models import User
 from app.dependencies.auth_dep import get_current_user
 from app.dependencies.dao_dep import get_session_with_commit, get_session_without_commit
@@ -38,9 +38,9 @@ async def create_chat(data: VerifyChat,
         return JSONResponse(status_code=200, content=f"Chat {chat.title} successfully created")
     except HTTPException as he:
         logger.error(f"HTTP Error: {he}")
-        return JSONResponse(status_code=he.status_code, content=str(he.detail))
+        raise
 
-@router.post("/add_to_chat")
+@router.post("/add_to_chat/{nickname}/{chat_id}")
 async def add_to_chat(nickname: str,
                       chat_id: int,
                       user: User = Depends(get_current_user),
@@ -48,17 +48,19 @@ async def add_to_chat(nickname: str,
     try:
         if not user:
             return TokenNotFound
-        chat = await ChatDAO(session).find_one_or_none(AddChatMember(user_id=user.id, chat_id=chat_id))
+        chat = await ChatDAO(session).find_one_or_none(VerifyCreator(creator_id=user.id))
         if not chat:
             raise ChatNotFound
         user_to_add = await UsersDAO(session).find_one_or_none(VerifyNickname(nickname=nickname))
         if not user_to_add:
             raise UserNotFoundException
+        if await ChatMemberDAO(session).find_one_or_none(AddChatMember(user_id=user_to_add.id, chat_id=chat.id)):
+            raise UserAlreadyExistsException
         await ChatMemberDAO(session).add(AddChatMember(user_id=user_to_add.id, chat_id=chat.id))
         return JSONResponse(status_code=200, content=f"User {nickname} successfully added to {chat_id}")
     except HTTPException as he:
         logger.error(f"HTTP Error: {he}")
-        return JSONResponse(status_code=he.status_code, content=str(he.detail))
+        raise
 
 
 @router.get("/find_friends")

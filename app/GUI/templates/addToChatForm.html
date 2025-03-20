@@ -45,23 +45,22 @@
         }, 400);
     });
     document.getElementById("addToChatButt").addEventListener("click", async () => {
-        const selectedChat = document.getElementById('ownersChats').value;
+        const selectedChatId = document.getElementById('ownersChats').value;
         const selectedUser = document.getElementById('findUsers').value;
-        if (!selectedChat || !selectedUser) {
+        if (!selectedChatId || !selectedUser) {
             alert('Please select a chat and a user.');
             return;
         }
         try {
-            const response = await axios.post("chat/add_to_chat", {
-                nickname: selectedUser,
-                title: selectedChat
-            })
+            const response = await axios.post(`chat/add_to_chat/${selectedUser}/${selectedChatId}`)
             if (response.status === 200) {
-            alert(response.data);
-        }
+                alert(response.data);
+            }
         } catch (e) {
             console.error('Error adding user to chat:', e)
-            alert('Failed to add user to chat. Please try again.')
+            if (e.response) {
+                alert(e.response.data.detail || "Something went wrong. Try again later");
+            }
         }
     })
     document.getElementById('ownersChats').addEventListener('focus', async () => {
@@ -78,7 +77,7 @@
                 selectElement.appendChild(optionElement);
             });
         } catch (e) {
-            alert('<h3>Something went wrong( Please try again later</h3>')
+            alert('Something went wrong( Please try again later')
             console.error('Error fetching chats:', e);
         }
     })
@@ -93,11 +92,14 @@
                 const response = await axios.get(`/chat/find_friends?description=${encodeURIComponent(searchText)}`);
                 response.data.forEach(user => {
                     const userElement = document.createElement('div');
-                    userElement.className = 'p-4 bg-white rounded-lg shadow hover:shadow-md transition-shadow duration-200';
+                    userElement.className = 'p-4 bg-white rounded-lg shadow hover:shadow-xl cursor-pointer transition-shadow duration-200';
                     userElement.innerHTML = `
                         <h3 class="text-xl font-semibold text-gray-800">${user.nickname}</h3>
                         <h4 class="text-lg text-gray-600">${user.first_name} ${user.last_name}</h4>
                     `;
+                    userElement.addEventListener("click", () => {
+                        document.getElementById("findUsers").value = user.nickname;
+                    })
                     displayUsers.appendChild(userElement);
                 });
             } catch {

@@ -48,10 +48,10 @@ async def register_user(response: Response,
             user_data_dict.pop('confirm_password', None)
             added_user = await user_dao.add(values=SUserAddDB(**user_data_dict))
             # возращаем сообщение об успехе и устанавливаем JWT токены
-            return JSONResponse(status_code=200, content={'message': 'Вы успешно зарегистрированы!'}), set_tokens(response, added_user.id)
+            return JSONResponse(status_code=200, content={'message': "You've been successfully registered!"}), set_tokens(response, added_user.id)
         except IntegrityError as ie:
-            logger.error(f"Ошибка интеграции с базой данных, откат транзакции: {ie}")
-            return JSONResponse(status_code=409, content="Пользователь уже существует")
+            logger.error(f"Error integrating with db: {ie}")
+            return JSONResponse(status_code=409, content="User already exists")
         except HTTPException as he:
             logger.error(f"HTTP Error: {he}")
             return JSONResponse(status_code=he.status_code, content=str(he.detail))
@@ -79,7 +79,7 @@ async def auth_user(
             status_code=200,
             content={
                 'ok': True,
-                'message': 'Авторизация успешна!'
+                'message': 'Successful authorization!'
             }), set_tokens(response, user.id)
     except HTTPException as he:
         logger.error(f"HTTP Error: {he}")

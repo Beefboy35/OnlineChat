@@ -9,6 +9,8 @@ class CreateChat(VerifyChat):
 class VerifyNickname(BaseModel):
     nickname: str
 
+
+
 class AddChatMember(BaseModel):
     user_id: int
     chat_id: int
